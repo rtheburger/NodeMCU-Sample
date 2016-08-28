@@ -1,23 +1,23 @@
+doctype html
 html
   head
+    meta(name="charset", value="utf-8")
     title= title
     meta(name="viewport", content="width=device-width", initial-scale="1.0")
     - each s in styles
-        link(href=s, rel='stylesheet')
+      link(href=s, rel='stylesheet')
   body
     header
-        img(id='logo', src='/../images/Logo_stusti.jpg')
-        h4(id="SiteTitle", fontcolor="red")!= title
+      img(id='logo', src='/../images/Logo_stusti.jpg')
+      h4(id="SiteTitle", fontcolor="red")!= title
     #main            
-        #description
-            p="Hier seht ihr die aktuellen Wetterbedingungen im schönen Auditorium des Swiss Alpine Center in Leysin. Gesponsort wird diese Seite von der AG2 - Effizientes Rechnen. Sie läuft auf einem kleinen selbstgeschriebenen Node.js Server auf einem Raspberry Pi im Gruppenraum der AG und fragt den Sensor im Auditorium mittels HTTP-Request übers WLAN jede Minute nach seinen Daten. Der Sensor misst neben der Raumtemperatur auch die Luftfeuchtigkeit, sowie den Luftdruck. Diese Informationen sollen bis zum Ende der Akademie aufgenommen werden, in der Hoffnung am bunten Abend anhand der \"Wetterdaten\” des Auditoriums zu sehen, wann Vorträge oder auch Parties dort unten stattfanden und wie sich diese auf das Raumklima auswirkten."        
+      #description
+        p="Hier seht ihr die aktuellen Wetterbedingungen im schönen Auditorium des Swiss Alpine Center in Leysin. Gesponsort wird diese Seite von der AG2 - Effizientes Rechnen. Sie läuft auf einem kleinen selbstgeschriebenen Node.js Server auf einem Raspberry Pi im Gruppenraum der AG und fragt den Sensor im Auditorium mittels HTTP-Request übers WLAN jede Minute nach seinen Daten. Der Sensor misst neben der Raumtemperatur auch die Luftfeuchtigkeit, sowie den Luftdruck. Diese Informationen sollen bis zum Ende der Akademie aufgenommen werden, in der Hoffnung am bunten Abend anhand der \"Wetterdaten\” des Auditoriums zu sehen, wann Vorträge oder auch Parties dort unten stattfanden und wie sich diese auf das Raumklima auswirkten."        
         #charts           
-            canvas(id="partyIndexChart", class="chart")
-            canvas(id="Hum_TempChart", class="chart")
-            canvas(id="barometerChart", class="chart") 
+          canvas#partyIndexChart.chart
+          canvas#humidityTemperatureChart.chart
+          canvas#barometerChart.chart
         footer
-            p="Entwickler: Rene Burger, Fabian Wildgrube | AG2 - Green IoT"
-        
-
+          p="Entwickler: Rene Burger, Fabian Wildgrube | AG2 - Green IoT"
     - each s in scripts
-        script(src=s)
+      script(src=s)

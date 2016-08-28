@@ -1,0 +1,26 @@
+{
+  "name": "Wetterstation",
+  "version": "0.0.0",
+  "description": "The frontend webserver for the NodeMCU weather station sample.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "green",
+    "iot",
+    "weather",
+    "nodemcu",
+    "sample",
+    "sensors",
+    "efficient",
+    "energy",
+    "academy"
+  ],
+  "author": "Florian Rappl",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "jade": "^1.11.0"
+  }
+}
