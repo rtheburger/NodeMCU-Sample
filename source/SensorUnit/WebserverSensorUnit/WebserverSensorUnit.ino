@@ -10,8 +10,8 @@
 unsigned long previousMillis = 0;        // will store last time LED was updated
 const long interval = 1000;           // interval at which to Update the Sensor Variables (milliseconds)
 
-const char* ssid = "SAC";
-const char* password = "copacabana";
+const char* ssid = "ssid";
+const char* password = "pass";
 
 
 unsigned long ulReqcount;
