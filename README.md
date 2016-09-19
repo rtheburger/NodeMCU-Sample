@@ -14,3 +14,13 @@ Die Sensorrohdaten im Browser:
 * [Einrichtung des ESP-8266](#ESP-Setup)
 * [Einrichtung des RaspPi](#RasPi-Setup)
 * [Frontend Visualisierung](#Frontend-Visualisierung)
+
+## Teile
+Für die Wetterstation benötigt man folgende Teile:
+	- [ESP-8266-Microcontroller](http://www.ebay.de/itm/like/401054497731?lpid=106&chn=ps&ul_noapp=true)
+	- HDC-1000 Temperatur/Luftfeuchtigkeitssensor
+	- [SparkFun Sound Detector (LMV3234)](https://www.sparkfun.com/products/12642)
+	- BMP180 Barometer
+	- Raspberry Pi mit Raspbian und NodeJS
+	- Jumperkabel, Breadboard
+	- USB-Stromversorgung (für ESP-Microcontroller und den Raspberry)
