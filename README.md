@@ -34,6 +34,7 @@ Für die Wetterstation benötigt man folgende Teile:
 
 ## RasPi-Setup
 1) Installieren von externen Modulen
+
 Um den Server auf dem RasPi zu realisieren brauchen wir einige externe Module. Zum einen 'express', welches eine unkomplizierte Realisierung des Servers auf Basis von NodeJS ermöglicht. Und zum anderen 'jade', um ohne großen Aufwand allerhand Variablen und Daten an die frontend Visualisierung zu übergeben (und uns nicht mit sperrigem html <> aufhalten zu müssen).
 
 Express
@@ -66,12 +67,14 @@ Die Installation von Jade ist relativ simpel:
 Voilá, nun ist alles nötige vorinstalliert - wir können also mit der Programmierung des Servers beginnen.
 
 2) Struktur unseres Servers
+
 Bevor wir jedoch in die Untiefen des Codes einsteigen vergegenwärtigen wir uns noch einmal den Aufbau des Projekts. Unser Sensorboard liefert uns als Antwort auf eine einfache http-Request ein JSON-Objekt mit den Daten aller Sensoren zum Zeitpunkt der Request. Diese Daten möchten wir in regelmäßigen Abständen pollen und in eine Datei speichern. So bauen wir uns unseren Datensatz auf.
 Unabhängig davon möchten wir auf eine http-Request eines Endnutzers eine Website bereitstellen, die die Daten der letzten Stunden (oder Tage) als Graphen ausgibt.
 
 Wir müssen also zum Einen ständig Daten pollen und speichern und zum Anderen mit Hilfe eines Servers auf eine http-Request mit einer schönen html Seite antworten. Let's do it!
 
 3) Globale Variablen und Einstiegspunkt - config.JSON und index.js
+
 Um einige Grundlegende Variablen an einem Punkt zu speichern und dadurch Änderungen relativ schmerzlos zu machen erstellen wir zu Beginn eine JSON Datei namens 'config.json' (Der Name spielt keine Rolle, aber sprechende Namen sind guter Stil). Wir füllen Sie mit folgendem Inhalt:
 
 			{
@@ -116,6 +119,7 @@ Nun starten wir den eigentlichen Server und übergeben ihm die config Daten, sow
 Damit ist `index.js` auch schon fertig. Der Einstiegspunkt für unser Projekt ist definiert, doch die eigentliche Arbeit beginnt erst jetzt.
 	
 4) Sensordaten pollen und speichern - sensor.js
+
 Zunächst definieren wir das Polling der Sensordaten vom Sensorboard und bieten gleichzeitig eine Schnittstelle für den Server diese Daten zu lesen.
 Dazu erstellen wir die Datei `sensor.js`. Zunächst binden wir die nötigen Module ein, um http Requests schicken zu können und mit Dateien zu arbeiten. Außerdem legen wir eine Variable für unsere Daten an, diese ist zunächst natürlich leer.
 
@@ -194,6 +198,7 @@ Die Request muss in beiden Fällen beendet werden und dann wird das ganze nach d
 Nun erklärt sich auch, warum wir in `index.js` nur einmal `sensor.poll(config);` aufrufen - das `SetInterval()` hier muss nur einmal aufgerufen werden und wird dann bis zum Beenden des ganzen Programms immer wieder ausgeführt. Wir bauen nun also kontinuierlich unseren Datensatz auf und können nun damit beginnen ihn interessierten Menschen im Internet zu zeigen. :)
 
 5) Transformieren der Daten - transform.js
+
 Bevor wir den eigentlichen Server bauen müssen wir noch kurz dafür sorgen, dass wir die Sensordaten so aufbereiten, dass die Graphen sie auch richtig anzeigen. Dazu erstellen wir das Modul `transform.js`, welches uns eine Reihe an Funktionen bereitstellt, die wir dann im eigentlich server verwenden werden um die Rohdaten zu transformieren und ans frontend zu übergeben.
 Wir erstellen also eine Datei `transform.js` und definieren wieder mit module.exports die Funktionen die wir bereitstellen. Diese Funktionen sind alle relativ selbsterklärend. Wir bekommen ein item übergeben - dieses Item ist ein Datensatz mit allen Sensordaten im JSON-Format. Wir geben von diesem Datensatz nun als x- und y-Koordinaten für die Graphen die Zeit und den Wert der jeweiligen Größe, die uns interessiert zurück:
 
@@ -271,6 +276,7 @@ Hier ist allerdings wirklich die Kreativität des Umsetzers gefragt einen besser
 Wir können nun also mithilfe dieser Transforms aus unserem großen Datensatz spezifisch einzelne Eigenschaften wie Temperatur oder Lautstärke oder ähnliches herausfiltern und bekommen sie in dem Format zurück, dass die Graphen brauchen um die Daten anzeigen zu können. Nun können wir tatsächlich damit anfangen den eigentlichen Server zu bauen. Endlich... ;)
 
 6) Der Server - server.js
+
 Sinn des Servers ist es nach Requests aus dem Internet zu horchen und daraufhin eine Seite zu rendern, die die Daten, die wir sammeln hübsch darstellt. Ums hübsch darstellen kümmern wir uns später. Aber die request beantworten und alle Daten bereitstellen müssen wir über den Server.
 
 Wir erstellen dazu eine Datei `server.js`. Zunächst binden wir express die transform Routinen ein, die wir gerade in transform.js definiert hatten:
@@ -369,6 +375,7 @@ Wir haben nun also in index.js die Sensor Polls gestartet (sensor.js), wodurch j
 Das heißt jetzt müssen wir uns noch ein .jade template bauen, damit auch wirklich eine html Seite gerendert werden kann. Und dann müssen wir noch dafür sorgen, dass die Daten auch wirklich als Graphen dargestellt werden. Let's go!
 
 7) Das wirkliche Front End - index.jade
+
 Der Jade Render Engine erwartet, dass alle template Files in einem Ordner mit Namen "views" gespeichert sind. D.h wir erstellen in unserem Verzeichnis (in dem inzwischen folgende Dateien liegen sollten: `index.js, server.js, sensor.js, config.json, package.json` und `transform.js`) ein Unterverzeichnis "views" und wechseln auch gleich in dieses.
 
 		mkdir views
@@ -426,6 +433,7 @@ Importieren wir alle js Dateien die wir im Server der Variablen script zugewiese
 ## Frontend-Visualisierung
 
 8) Die Graphen - chartmaker.js
+
 Jetzt kommen wir zu den Graphen. Um diese zu realisieren benutzen wir die Bibliothek chart.js mit deren Hilfe man wunderschöne Graphen zaubern (lassen) kann. 
 
 Zuerst wollen wir jedoch noch ein wenig Ordnung schaffen. Im Hauptverzeichnis unseres Projekts legen wir einen Ordner "assets" an. Diesre wurde schon oben erwähnt - in ihm legen wir unser Bilder und CSS Files und eben unsere JS Skripts für die Graphen.
@@ -595,6 +603,7 @@ Damit auch direkt nach dem ersten Laden der Seite die Graphen zum ersten mal ref
 Jetzt können wir `chartMaker.js` abspeichern und sind fertig. Unser Frontend sollte nun zügig laden und mit einer kleinen Verzögerung unsere Daten in den Graphen anzeigen und jede Minute updaten, damit wir keinen neuen Datensatz verpassen.
 
 9) Starten des Servers
+
 Um den Ganzen Spaß jetzt auch noch zu starten einfach auf dem RasPi im Hauptverzeichnis des Projekts im Terminal Folgendes aufrufen:
 		
 		node index.js
