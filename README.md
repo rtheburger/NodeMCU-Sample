@@ -34,26 +34,36 @@ Für die Wetterstation benötigt man folgende Teile:
 
 ## RasPi-Setup
 1) Installieren von externen Modulen
-		Um den Server auf dem RasPi zu realisieren brauchen wir einige externe Module. Zum einen 'express', welches eine unkomplizierte Realisierung des Servers auf Basis von NodeJS ermöglicht. Und zum anderen 'jade', um ohne großen Aufwand allerhand Variablen und Daten an die frontend Visualisierung zu übergeben (und uns nicht mit sperrigem html <> aufhalten zu müssen).
+Um den Server auf dem RasPi zu realisieren brauchen wir einige externe Module. Zum einen 'express', welches eine unkomplizierte Realisierung des Servers auf Basis von NodeJS ermöglicht. Und zum anderen 'jade', um ohne großen Aufwand allerhand Variablen und Daten an die frontend Visualisierung zu übergeben (und uns nicht mit sperrigem html <> aufhalten zu müssen).
 
-		Express
-		Wir gehen hier davon aus, dass NodeJS bereits auf dem RasPi installiert ist (standardmäßig ist die der Fall).
-		Wir erstellen nun ein neues Verzeichnis für unsere Frontend Dateien und wechseln in das Verzeichnis:
-		//mkdir frontend
-		//cd frontend
-		Nun erstellen wir mit dem Befehl 'npm init' eine Datei namens package.json . Diese speichert Dinge wie Beschreibung, Autor, Einstiegspunkt, dependencies, etc. für das Projekt.
-		//npm init
-		Nun werden nacheinander alle Optionen für package.json abgefragt - hier kann man die defaults mit Enter bestätigen oder neue Daten eingeben. Wichtig ist nur, dass der Eintrag 'entry point: (index.js)' unverändert bleibt, da dies den Einstieg in unser Programm definiert
-		//entry point: (index.js)
-		Nun können wir express installieren:
-		//npm install express --save
-		(Node-Module, die mit der Option --save installiert werden, werden zur Abhängigkeitsliste in der Datei package.json hinzugefügt. Danach werden bei der Ausführung von npm install im Verzeichnis frontend automatisch alle Module in der Abhängigkeitsliste installiert.)
-		Bei Problemen gibt es hier mehr Infos zu express: http://expressjs.com/en/starter/installing.html
+Express
+Wir gehen hier davon aus, dass NodeJS bereits auf dem RasPi installiert ist (standardmäßig ist die der Fall).
+Wir erstellen nun ein neues Verzeichnis für unsere Frontend Dateien und wechseln in das Verzeichnis:
+```
+mkdir frontend
+cd frontend
+```
+Nun erstellen wir mit dem Befehl 'npm init' eine Datei namens package.json . Diese speichert Dinge wie Beschreibung, Autor, Einstiegspunkt, dependencies, etc. für das Projekt.
+```
+npm init
+```
+Nun werden nacheinander alle Optionen für package.json abgefragt - hier kann man die defaults mit Enter bestätigen oder neue Daten eingeben. Wichtig ist nur, dass der Eintrag 'entry point: (index.js)' unverändert bleibt, da dies den Einstieg in unser Programm definiert
+```
+entry point: (index.js)
+```
+Nun können wir express installieren:
+```
+npm install express --save
+```
+(Node-Module, die mit der Option --save installiert werden, werden zur Abhängigkeitsliste in der Datei package.json hinzugefügt. Danach werden bei der Ausführung von npm install im Verzeichnis frontend automatisch alle Module in der Abhängigkeitsliste installiert.)
+Bei Problemen gibt es [hier mehr Infos zu express](http://expressjs.com/en/starter/installing.html)
 
-		Jade
-		Die Installation von Jade ist relativ simpel:
-		//npm install jade --save
-		Voilá, nun ist alles nötige vorinstalliert - wir können also mit der Programmierung des Servers beginnen.
+Jade
+Die Installation von Jade ist relativ simpel:
+```
+//npm install jade --save
+```
+Voilá, nun ist alles nötige vorinstalliert - wir können also mit der Programmierung des Servers beginnen.
 
 	2) Struktur unseres Servers
 		Bevor wir jedoch in die Untiefen des Codes einsteigen vergegenwärtigen wir uns noch einmal den Aufbau des Projekts. Unser Sensorboard liefert uns als Antwort auf eine einfache http-Request ein JSON-Objekt mit den Daten aller Sensoren zum Zeitpunkt der Request. Diese Daten möchten wir in regelmäßigen Abständen pollen und in eine Datei speichern. So bauen wir uns unseren Datensatz auf.
