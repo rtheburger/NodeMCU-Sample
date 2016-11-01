@@ -43,6 +43,17 @@ Für die Wetterstation benötigt man folgende Teile:
 - Jumperkabel, Breadboard
 - USB-Stromversorgung (für ESP-Microcontroller und den Raspberry)
 
+## Sensor 
+
+Die Sensoreinheit besteht aus dem ESP-8266 als Zentrale, der Temperatur-, Luftfeuchtigkeit- und Luftdrucksensor sind über den I2C-Bus daran angeschlossen, hier werden die Pins D2 und D3 verwendet. Das Sound Detector Modul wird über den analogen Eingang ausgelesen. Die genaue Verschaltung der Sensormodule mit dem NodeMCU-Board ist auf folgendem Fritzing-Diagramm erkennbar.
+
+//
+
+## ESP-Setup
+Die Daten werden über ein Arduino-Skript auf dem ESP-8266 ausgelesen und auf diesem über einen kleinen Webserver zur Verfügung gestellt. Damit auch der ESP auch von der Arduino-IDE unterstützt wird, muss man ein Paket, den ESP 8266 Core, nachladen. Wie das geht kann man im [Github-Repository von der ESP8266 Community](https://github.com/esp8266/Arduino) nachlesen. Dann braucht nur noch das von dir verwendete Board in der IDE unter "Werkzeuge" ausgewählt werden, wir haben das NodeMCU (Basierend auf dem ESP-12E) verwendet. 
+
+Der Code für die Sensor-Einheit ist HIER (LINK) zur Verfügung gestellt. Er ist leider weder schön noch gut nachvollziehbar, ist aber über mehrere Tage sehr stabil gelaufen. Für den Webserver wird die <ESP8266WiFi.h>- Bibliothek benutzt, zum Ansprechen des BMP180 und für das Handling des I2C-Bus werden zwei weitere Bibliotheken, <SFE_BMP180.h> und <Wire.h>, verwendet. 
+
 ## Einrichtung des Frontend Servers auf dem Raspberry Pi
 
 ### Installieren von externen Modulen
