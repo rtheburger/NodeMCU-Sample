@@ -53,7 +53,7 @@ module.exports = {
       }
 
       res.header('Access-Control-Allow-Origin', '*');
-      res.json(data);
+      res.json(buffer.value);
     });
     
     app.get('/', function (req, res) {
